@@ -10,12 +10,29 @@ public class LogicScript : MonoBehaviour
     public int playerScore;
     public Text scoreText;
     public GameObject gameOverScreen;
+    public BirdScript birdScript;
+
+    private void Start()
+    {
+        birdScript = GameObject.FindGameObjectWithTag("Bird").GetComponent<BirdScript>();
+    }
+
+    private void Update()
+    {
+        if(!birdScript.isBirdAlive)
+        {
+            gameOver();
+        }
+    }
 
     [ContextMenu("Add Score")]
-    public void addScore()
+    public void addScore(int score)
     {
-        playerScore++;
-        scoreText.text = playerScore.ToString();
+        if(birdScript.isBirdAlive)
+        {
+            playerScore += score;
+            scoreText.text = playerScore.ToString();
+        }
     }
 
     public void RestartGame()
